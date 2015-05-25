@@ -1,0 +1,4 @@
+class RedisMock
+
+
+end

@@ -1,27 +1,40 @@
 require 'rest/api/client/version'
 require 'rest/api/client/config'
+require 'rest/api/exceptions/service_url_exception'
+require 'rest/api/client/request_handler'
 
 module RestApiClient
-  @relative_path
-
-  def initialize(relative_path)
-    @relative_path = relative_path
-  end
 
   def self.perform_get(path, args = {})
-    RestClient.get self.get_service_url + path, args
+    RequestsHandler.perform_get(path, args)
   end
 
   def perform_get(path, args = {})
-
+    RequestsHandler.perform_get(path, args)
   end
 
-  private
+  def self.perform_post(path, args = {})
+    RequestsHandler.perform_post(path, args)
+  end
 
-  # TODO - tratar o final da URL (com '/' ou sem)
-  def get_service_url
-    redis = Redis.new
-    redis.get RestApiClient.config[:service_key]
+  def perform_post(path, args = {})
+    RequestsHandler.perform_post(path, args)
+  end
+
+  def self.perform_put(path, args = {})
+    RequestsHandler.perform_put(path, args)
+  end
+
+  def perform_put(path, args = {})
+    RequestsHandler.perform_put(path, args)
+  end
+
+  def self.perform_delete(path, args = {})
+    RequestsHandler.perform_delete(path, args)
+  end
+
+  def perform_delete(path, args = {})
+    RequestsHandler.perform_delete(path, args)
   end
 
 end

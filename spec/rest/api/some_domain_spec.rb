@@ -1,5 +1,5 @@
 require 'spec_helper'
-require_relative '../../resources/some_domain'
+require_relative '../../support/some_domain'
 
 describe RestApiClient do
 
@@ -22,24 +22,4 @@ describe RestApiClient do
       it { expect(class_methods).to include(:list) }
     end
   end
-
-  # describe "mocked query of web service" do
-  #   it "should perform correct action on system data based on mocked response" do
-  #     RestClient = double
-  #     file = File.open('RELATIVE_FILE_PATH_HEREr') #Relative to root of Rails app
-  #     data = file.read
-  #     file.close
-  #
-  #     response = double
-  #     response.stub(:code) { 200 }
-  #     response.stub(:body) { data }
-  #     response.stub(:headers) { {} }
-  #     RestClient.stub(:get) { response }
-  #
-  #     YourApp.call_method_that_results_in_web_service_query
-  #     #Your assertions here
-  #
-  #   end
-  # end
-
 end

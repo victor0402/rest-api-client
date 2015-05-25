@@ -13,7 +13,7 @@ describe RestApiClient do
     end
 
     it 'allows a new configuration through yaml file' do
-      path_to_config = 'spec/resources/api_config.yaml'
+      path_to_config = 'spec/support/api_config.yaml'
       RestApiClient.configure_with path_to_config
       expect(RestApiClient.config).to eq({:log_level => 'debug', :service_key => 'a_key'})
     end
