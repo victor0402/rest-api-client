@@ -5,33 +5,33 @@ require 'redis'
 module RestApiClient
   class RequestsHandler
 
-    def self.perform_get(path, args = {})
-      RestClient.get(self.get_service_url + path, args) { |response, request, result, &block|
+    def self.perform_get(service_key, path, args = {})
+      RestClient.get(get_service_url(service_key) + path, args) { |response, request, result, &block|
         get_response_callback.call(response, request, result, &block)
       }
     end
 
-    def self.perform_post(path, args = {})
-      RestClient.post(self.get_service_url + path, args) { |response, request, result, &block|
+    def self.perform_post(service_key, path, args = {})
+      RestClient.post(get_service_url(service_key) + path, args) { |response, request, result, &block|
         get_response_callback.call(response, request, result, &block)
       }
     end
 
-    def self.perform_put(path, args = {})
-      RestClient.put(self.get_service_url + path, args) { |response, request, result, &block|
+    def self.perform_put(service_key, path, args = {})
+      RestClient.put(get_service_url(service_key) + path, args) { |response, request, result, &block|
         get_response_callback.call(response, request, result, &block)
       }
     end
 
-    def self.perform_delete(path, args = {})
-      RestClient.delete(self.get_service_url + path, args) { |response, request, result, &block|
+    def self.perform_delete(service_key, path, args = {})
+      RestClient.delete(get_service_url(service_key) + path, args) { |response, request, result, &block|
         get_response_callback.call(response, request, result, &block)
       }
     end
 
-    def self.get_service_url
+    def self.get_service_url(service_key)
       redis = Redis.new
-      path = redis.get RestApiClient.config[:service_key]
+      path = redis.get service_key
       raise RestApiClient::ServiceUrlException.new('You must need to set the service key') unless path
       path << '/' unless path.end_with?('/')
       path
