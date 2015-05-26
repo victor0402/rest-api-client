@@ -10,7 +10,7 @@ module RestApiClient
     PATH = ''
     SERVICE_KEY = ''
 
-    attr_accessor :id
+    attr_accessor :id, :created_at, :updated_at
 
     def initialize(args = {})
       args.each do |k, v|
@@ -20,6 +20,14 @@ module RestApiClient
 
     def self.list
       self.perform_get path
+    end
+
+    def self.find(id)
+      raise Error
+    end
+
+    def self.get(id)
+      raise Error
     end
 
     def save

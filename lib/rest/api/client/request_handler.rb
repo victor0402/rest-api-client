@@ -46,13 +46,32 @@ module RestApiClient
         @access_token = result.header['access-token']
         @uid = result.header['uid']
         if response.code >= 200 && response.code < 300
-          json_data = grab_data(response)
-          hash_params = {}
-          hash_params = JSON.parse json_data if json_data && json_data != ''
-          if hash_params.kind_of?(Hash)
-            hash_params.each { |k, v| send("#{k}=", v) }
+          json_response = JSON.parse response
+          json_data = {}
+          if json_response.kind_of?(Hash) && json_response.has_key?('data')
+            json_data = json_response['data']
           end
-          self
+
+          objects = Array.new
+
+          if json_data.kind_of?(Array)
+            json_data.each { |data|
+              current_person = Person.new
+              data.each { |k, v|
+                current_person.send("#{k}=", v)
+              }
+              objects.push(current_person)
+            }
+          end
+
+          # if hash_data.kind_of?(Hash)
+          #   hash_data.each { |k, v|
+          #     send("#{k}=", v)
+          #
+          #   }
+          #
+          # end
+          objects
 
         elsif [301, 302, 307].include? response.code
           response.follow_redirection(request, result, &block)

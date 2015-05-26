@@ -4,7 +4,7 @@ require_relative '../../support/some_domain'
 describe 'RestApiClient' do
 
   describe 'RestModel' do
-    context 'should have instance methods' do
+    context 'instance methods' do
       subject(:instance_methods) { SomeDomain.instance_methods }
 
       it { expect(instance_methods).to include(:perform_get) }
@@ -23,17 +23,27 @@ describe 'RestApiClient' do
       end
     end
 
-    context 'should have class methods' do
+    context 'class methods' do
       subject(:class_methods) { SomeDomain.methods }
 
       it { expect(class_methods).to include(:list) }
       it { expect(class_methods).to include(:perform_get) }
+      it { expect(class_methods).to include(:find) }
+      it { expect(class_methods).to include(:get) }
 
       it 'should use the correct path' do
         expect(SomeDomain).to receive(:perform_get).with('some_domain')
         expect(SomeDomain.path).to eq 'some_domain'
         SomeDomain.list
       end
+    end
+
+    context 'instance properties' do
+      subject(:domain) { SomeDomain.new }
+
+      it { expect(domain.id).to be_nil }
+      it { expect(domain.created_at).to be_nil }
+      it { expect(domain.updated_at).to be_nil }
     end
 
   end
