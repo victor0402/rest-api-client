@@ -1,6 +1,16 @@
 require 'rest/api/client'
-class FooClient < FooModelClient::FooModel
+
+class Foo < RestApiClient::RestModel
   SERVICE_KEY = 'foo_key'
+  PATH = 'foo'
+
+  def path
+    PATH
+  end
+
+  def self.path
+    PATH
+  end
 
   # default service_key to instance methods
   def service_key

@@ -18,3 +18,9 @@ RSpec.configure do |config|
     mocks.verify_partial_doubles = true
   end
 end
+
+require_relative 'support/redis_mock'
+include RedisMock
+
+require_relative 'support/mock_requests'
+include MockRequests

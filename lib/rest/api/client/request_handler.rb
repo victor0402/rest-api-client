@@ -46,7 +46,9 @@ module RestApiClient
         @access_token = result.header['access-token']
         @uid = result.header['uid']
         if response.code >= 200 && response.code < 300
-          hash_params = JSON.parse grab_data(response)
+          json_data = grab_data(response)
+          hash_params = {}
+          hash_params = JSON.parse json_data if json_data && json_data != ''
           if hash_params.kind_of?(Hash)
             hash_params.each { |k, v| send("#{k}=", v) }
           end

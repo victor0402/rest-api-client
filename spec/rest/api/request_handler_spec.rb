@@ -8,24 +8,22 @@ describe RestApiClient::RequestsHandler do
     before do
       RestApiClient.configure config
 
-      @redis_mock = double(Redis)
-      expect(Redis).to receive(:new).and_return(@redis_mock)
     end
 
     it 'gets the service url from redis using the config' do
-      allow(@redis_mock).to receive(:get).with(config[:service_key]).and_return(service_url)
+      mock_redis_get config[:service_key], service_url
       url = RestApiClient::RequestsHandler.get_service_url config[:service_key]
       expect(url).to eq service_url
     end
 
     it 'adds a slash in the end of the url' do
-      allow(@redis_mock).to receive(:get).with(config[:service_key]).and_return(service_url)
+      mock_redis_get config[:service_key], service_url
       url = RestApiClient::RequestsHandler.get_service_url config[:service_key]
       expect(url).to end_with '/'
     end
 
     it 'throws an error if the url is not defined in redis' do
-      allow(@redis_mock).to receive(:get).with(config[:service_key]).and_return(nil)
+      mock_redis_get config[:service_key]
       expect {
         RestApiClient::RequestsHandler.get_service_url config[:service_key]
       }.to raise_error(RestApiClient::ServiceUrlException, 'You must need to set the service key')

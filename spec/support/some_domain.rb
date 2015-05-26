@@ -1,4 +1,5 @@
 require 'rest/api/client'
+
 class SomeDomain < RestApiClient::RestModel
   PATH = 'some_domain'
 
