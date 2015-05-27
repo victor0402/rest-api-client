@@ -55,12 +55,8 @@ module RestApiClient
           objects = Array.new
 
           if json_data.kind_of?(Array)
-            json_data.each { |data|
-              current_person = Person.new
-              data.each { |k, v|
-                current_person.send("#{k}=", v)
-              }
-              objects.push(current_person)
+            objects = json_data.map { |data|
+               Person.new data
             }
           end
 

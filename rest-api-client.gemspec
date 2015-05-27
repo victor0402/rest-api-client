@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'rest-api-client'
   spec.description   = 'rest-api-client'
-  spec.homepage      = 'http://orbitus.com'
+  spec.homepage      = 'https://bitbucket.org/orbitus/rest-api-client'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
@@ -25,6 +25,7 @@ Gem::Specification.new do |spec|
 
   spec.add_dependency 'rest-client', '~> 1.8.0'
   spec.add_dependency 'redis', '~> 3.2.1'
+  spec.add_dependency 'virtus'
 
   spec.add_development_dependency 'bundler'
   spec.add_development_dependency 'rake', '~> 10.0'

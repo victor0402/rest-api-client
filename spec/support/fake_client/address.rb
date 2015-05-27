@@ -2,7 +2,9 @@ require_relative 'fake_client'
 class Address < FakeClient
   PATH = 'addresses'
 
-  attr_accessor :street, :city, :state
+  attribute :street, String
+  attribute :city, String
+  attribute :state, String
 
   def path
     PATH

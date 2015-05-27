@@ -1,3 +1,4 @@
+require 'virtus'
 require 'rest/api/client/version'
 require 'rest/api/client/config'
 require 'rest/api/exceptions/service_url_exception'
@@ -6,17 +7,14 @@ require 'rest/api/client/request_handler'
 module RestApiClient
 
   class RestModel
+    include Virtus.model
 
     PATH = ''
     SERVICE_KEY = ''
 
-    attr_accessor :id, :created_at, :updated_at
-
-    def initialize(args = {})
-      args.each do |k, v|
-        instance_variable_set("@#{k}", v) unless v.nil?
-      end if args.is_a? Hash
-    end
+    attribute :id, Integer
+    attribute :created_at, Date
+    attribute :updated_at, Date
 
     def self.list
       self.perform_get path

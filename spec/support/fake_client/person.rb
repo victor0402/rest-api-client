@@ -1,9 +1,12 @@
 require_relative 'fake_client'
+require_relative 'address'
 
 class Person < FakeClient
   PATH = 'people'
 
-  attr_accessor :name, :address, :email, :address
+  attribute :name, String
+  attribute :email, String
+  attribute :address, Address
 
   def path
     PATH
