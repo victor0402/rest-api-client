@@ -1,5 +1,6 @@
 require 'virtus'
 require 'rest/api/client/version'
+require 'rest/api/client/json_parser'
 require 'rest/api/client/config'
 require 'rest/api/exceptions/service_url_exception'
 require 'rest/api/client/request_handler'
@@ -17,7 +18,7 @@ module RestApiClient
     attribute :updated_at, Date
 
     def self.list
-      self.perform_get path
+      self.perform_get path, {:type => self}
     end
 
     def self.find(id)
@@ -29,7 +30,7 @@ module RestApiClient
     end
 
     def save
-      perform_post path
+      perform_post path, {:type => self}
     end
 
     def delete
@@ -37,7 +38,7 @@ module RestApiClient
     end
 
     def update
-      perform_put "#{path}/#{id}"
+      perform_put "#{path}/#{id}", {:type => self}
     end
 
     def perform_get(path, args = {})

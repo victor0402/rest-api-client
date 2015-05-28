@@ -25,7 +25,7 @@ describe RestApiClient do
     it 'should fetch all people' do
       mock_request :get, "#{service_url}/people", 'people_response.txt'
       people = Person.list
-      expect(people).to_not be_nil
+      expect(people).to all(be_a Person)
     end
   end
 end

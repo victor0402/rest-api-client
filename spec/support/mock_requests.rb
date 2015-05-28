@@ -1,6 +1,11 @@
 module MockRequests
-  def expected_response(file_name)
-    File.open(File.join(File.dirname(__FILE__), '..', 'fixtures', "#{file_name}"))
+  def expected_response(file_name, read=false)
+    response = File.open(File.join(File.dirname(__FILE__), '..', 'fixtures', "#{file_name}"))
+    if read
+      response = response.read
+    end
+
+    response
   end
 
   def mock_request(method, expected_uri, response_file = nil)

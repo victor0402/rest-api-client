@@ -32,7 +32,7 @@ describe 'RestApiClient' do
       it { expect(class_methods).to include(:get) }
 
       it 'should use the correct path' do
-        expect(SomeDomain).to receive(:perform_get).with('some_domain')
+        expect(SomeDomain).to receive(:perform_get).with('some_domain', {:type => SomeDomain})
         expect(SomeDomain.path).to eq 'some_domain'
         SomeDomain.list
       end

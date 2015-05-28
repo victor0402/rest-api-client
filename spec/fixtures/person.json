@@ -1,0 +1,13 @@
+{
+  "data": {
+    "id": 3126880,
+    "name": "Owens Bailey",
+    "email": "pacesoto@jamnation.com",
+    "address": {
+      "id": 9963426,
+      "state": "Connecticut",
+      "city": "Vincent",
+      "street": "Prince Street"
+    }
+  }
+}
