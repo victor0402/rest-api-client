@@ -18,27 +18,27 @@ module RestApiClient
     attribute :updated_at, Date
 
     def self.list
-      self.perform_get path, {:type => self}
+      perform_get path, {:type => self}
     end
 
     def self.find(id)
-      raise Error
+      perform_get "#{path}/#{id}", {:type => self}
     end
 
     def self.get(id)
-      raise Error
+      self.find id
     end
 
-    def save
-      perform_post path, {:type => self}
+    def save!
+      perform_post path, {:type => self, :params => self.attributes}
     end
 
     def delete
       perform_delete "#{path}/#{id}"
     end
 
-    def update
-      perform_put "#{path}/#{id}", {:type => self}
+    def update!
+      perform_put "#{path}/#{id}", {:type => self, :params => self.attributes}
     end
 
     def perform_get(path, args = {})
@@ -80,6 +80,11 @@ module RestApiClient
     def self.path
       PATH
     end
+
+    def ==(other)
+      id == other.id
+    end
+
   end
 
 end

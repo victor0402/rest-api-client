@@ -8,11 +8,9 @@ module RestApiClient
       :service_key => ''
   }
 
-  @valid_config_keys = @config.keys
-
   # Configure through hash
   def self.configure(opts = {})
-    opts.each { |k, v| @config[k.to_sym] = v if @valid_config_keys.include? k.to_sym }
+    opts.each { |k, v| @config[k.to_sym] = v }
   end
 
   # Configure through yaml file

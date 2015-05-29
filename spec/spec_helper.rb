@@ -1,3 +1,15 @@
+require 'simplecov'
+# cobertura dos testes
+SimpleCov.start do
+
+  # ignorar pastas
+  add_filter 'spec/'
+  add_filter 'bin/'
+
+  # grupo de arquivos
+  add_group 'lib', 'lib'
+end
+
 $LOAD_PATH.unshift File.expand_path('../../lib', __FILE__)
 require 'factory_girl'
 require 'webmock/rspec'

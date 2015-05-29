@@ -1,0 +1,15 @@
+HTTP/1.1 200 OK
+Server: apache
+Date: Mon, 23 Aug 2014 08:21:03 GMT
+Content-Type: text/json; charset=utf-8
+Transfer-Encoding: chunked
+Connection: keep-alive
+Keep-Alive: timeout=20
+Status: 200 OK
+Cache-Control: public, max-age=21600
+X-Varnish: 2542104567 2542101419
+Age: 36
+Via: 1.1 varnish
+X-Cache: HIT
+
+{"data": {"id": 3126880,"name": "Owens Bailey","email": "pacesoto@jamnation.com","address": {"id": 9963426,"state": "Connecticut","city": "Vincent","street": "Prince Street"}}}

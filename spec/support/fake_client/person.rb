@@ -15,4 +15,10 @@ class Person < FakeClient
   def self.path
     PATH
   end
+
+  def ==(other)
+    super && name == other.name && email == other.email && address == other.address
+  end
+
+
 end

@@ -13,4 +13,8 @@ class Address < FakeClient
   def self.path
     PATH
   end
+
+  def ==(other)
+    super && street == other.street && city == other.city && state == other.state
+  end
 end

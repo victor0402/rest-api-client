@@ -18,10 +18,5 @@ describe RestApiClient do
       expect(RestApiClient.config).to eq({:log_level => 'debug', :service_key => 'a_key'})
     end
 
-    it 'allows only known keys' do
-      new_config = {:log_level => 'warning', :service_key => 'some_service_key', :some_key => 'some_value'}
-      RestApiClient.configure new_config
-      expect(RestApiClient.config).to_not have_key(:some_key)
-    end
   end
 end

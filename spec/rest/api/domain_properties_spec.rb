@@ -11,9 +11,9 @@ describe 'RestApiClient' do
       it { expect(instance_methods).to include(:perform_post) }
       it { expect(instance_methods).to include(:perform_delete) }
       it { expect(instance_methods).to include(:perform_put) }
-      it { expect(instance_methods).to include(:save) }
+      it { expect(instance_methods).to include(:save!) }
       it { expect(instance_methods).to include(:delete) }
-      it { expect(instance_methods).to include(:update) }
+      it { expect(instance_methods).to include(:update!) }
 
       it 'should use the correct path to make requests' do
         some_domain_instance = SomeDomain.new({:id => 1})
