@@ -13,6 +13,16 @@ module RestApiClient
     opts.each { |k, v| @config[k.to_sym] = v }
   end
 
+  # Configure the authorization_key for one client
+  def self.configure_authorization(client_name, auth_key)
+    @config['authorization'] ||= {}
+    @config['authorization'][client_name] = auth_key
+  end
+
+  def self.get_auth_key(client_name)
+    @config['authorization'][client_name]
+  end
+
   # Configure through yaml file
   def self.configure_with(path_to_yaml_file)
     begin

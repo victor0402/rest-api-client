@@ -1,4 +1,6 @@
 require 'spec_helper'
+require_relative '../../support/foo'
+
 
 describe RestApiClient::RequestsHandler do
   context 'get service url from redis' do
@@ -7,7 +9,6 @@ describe RestApiClient::RequestsHandler do
 
     before do
       RestApiClient.configure config
-
     end
 
     it 'gets the service url from redis using the config' do
@@ -27,6 +28,19 @@ describe RestApiClient::RequestsHandler do
       expect {
         RestApiClient::RequestsHandler.get_service_url config[:service_key]
       }.to raise_error(RestApiClient::ServiceUrlException, 'You must need to set the service key')
+    end
+  end
+
+  context '.do_request' do
+    let(:service_key) { Foo.service_key }
+    let(:service_url) { 'http://foo.bar' }
+    let(:auth_key) { 'key' }
+
+    it 'uses the authorization_key if it is configured' do
+      RestApiClient.configure_authorization service_key, auth_key
+      mock_redis_get service_key, service_url
+
+      RestApiClient::RequestsHandler.do_request('get', service_key, '')
     end
   end
 end

@@ -30,7 +30,7 @@ module RestApiClient
     end
 
     def save!
-      perform_post path, {:type => self, :params => self.attributes}
+      perform_post path, {:type => self, :params => {self.class.name.split('::').last.downcase => self.attributes}}
     end
 
     def delete
