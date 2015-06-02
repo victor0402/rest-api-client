@@ -55,18 +55,18 @@ describe RestApiClient do
     end
 
     # TODO - esperar o service para poder testar
-    describe '#save' do
-      let(:new_person) { Person.new(
-          :name => 'Owens Bailey',
-          :email => 'pacesoto@jamnation.com',
-          :address => Address.new(:state => 'Connecticut', :city => 'Vincent', :street => 'Prince Street')
-      ) }
-
-      it 'save the person and return his id' do
-        # new_person.save!
-        # expect(new_person).to have_attributes(:id => 3126880)
-      end
-
-    end
+    # describe '#save' do
+    #   let(:new_person) { Person.new(
+    #       :name => 'Owens Bailey',
+    #       :email => 'pacesoto@jamnation.com',
+    #       :address => Address.new(:state => 'Connecticut', :city => 'Vincent', :street => 'Prince Street')
+    #   ) }
+    #
+    #   it 'save the person and return his id' do
+    #     # new_person.save!
+    #     # expect(new_person).to have_attributes(:id => 3126880)
+    #   end
+    #
+    # end
   end
 end

@@ -15,7 +15,7 @@ Gem::Specification.new do |spec|
 
   spec.summary       = 'rest-api-client'
   spec.description   = 'rest-api-client'
-  spec.homepage      = 'https://bitbucket.org/orbitus/rest-api-client'
+  spec.homepage      = 'https://github.com/victor0402/rest-api-client'
   spec.license       = 'MIT'
 
   spec.files         = `git ls-files -z`.split("\x0").reject { |f| f.match(%r{^(test|spec|features)/}) }
