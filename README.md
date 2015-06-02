@@ -1,6 +1,8 @@
 # RestApiClient
+[![Build Status](https://travis-ci.org/victor0402/rest-api-client.svg?branch=master)](https://travis-ci.org/victor0402/rest-api-client)
 
 Common classes and methods to handle rest communication
+
 
 ## Installation
 
