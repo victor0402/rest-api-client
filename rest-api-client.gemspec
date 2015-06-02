@@ -9,10 +9,6 @@ Gem::Specification.new do |spec|
   spec.authors       = ['Victor']
   spec.email         = ['vcarvalho0402@gmail.com']
 
-  if spec.respond_to?(:metadata)
-    spec.metadata['allowed_push_host'] = "TODO: Set to 'http://mygemserver.com' to prevent pushes to rubygems.org, or delete to allow pushes to any server."
-  end
-
   spec.summary       = 'rest-api-client'
   spec.description   = 'rest-api-client'
   spec.homepage      = 'https://github.com/victor0402/rest-api-client'
