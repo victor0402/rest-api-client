@@ -1,4 +1,7 @@
 # RestApiClient
+
+[![Gem Version](https://badge.fury.io/rb/rest-api-client.svg)](http://badge.fury.io/rb/rest-api-client)
+
 [![Build Status](https://travis-ci.org/victor0402/rest-api-client.svg?branch=master)](https://travis-ci.org/victor0402/rest-api-client)
 
 Common classes and methods to handle rest communication
