@@ -1,5 +1,6 @@
 require 'virtus'
 require 'rest/api/client/version'
+require 'rest/api/client/logger'
 require 'rest/api/client/json_parser'
 require 'rest/api/client/config'
 require 'rest/api/exceptions/service_url_exception'

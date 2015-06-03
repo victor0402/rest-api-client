@@ -4,7 +4,6 @@ module RestApiClient
 
   # Configuration defaults
   @config = {
-      :log_level => 'verbose',
       :service_key => ''
   }
 
@@ -28,13 +27,13 @@ module RestApiClient
   def self.configure_with(path_to_yaml_file)
     begin
       config = YAML::load(IO.read(path_to_yaml_file))
+      configure(config)
     rescue Errno::ENOENT
-      log(:warning, "YAML configuration file couldn't be found. Using defaults."); return
+      RestApiClient.logger.warn("YAML configuration file couldn't be found. Using defaults.");
     rescue Psych::SyntaxError
-      log(:warning, 'YAML configuration file contains invalid syntax. Using defaults.'); return
+      RestApiClient.logger.warn('YAML configuration file contains invalid syntax. Using defaults.');
     end
 
-    configure(config)
   end
 
   def self.config

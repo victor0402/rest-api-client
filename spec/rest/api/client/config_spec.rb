@@ -3,7 +3,7 @@ require 'spec_helper'
 describe RestApiClient do
   context '.configuration' do
     it 'has a default configuration' do
-      expect(RestApiClient.config).to eq({:log_level => 'verbose', :service_key => ''})
+      expect(RestApiClient.config).to eq({:service_key => ''})
     end
 
     it 'allows a new configuration through hash' do
@@ -18,9 +18,23 @@ describe RestApiClient do
       expect(RestApiClient.config).to eq({:log_level => 'debug', :service_key => 'a_key'})
     end
 
+    it 'uses the default configuration if the file does not exists' do
+      path_to_config = 'spec/support/not_found_file.yaml'
+      expect(RestApiClient.logger).to receive(:warn).with("YAML configuration file couldn't be found. Using defaults.")
+
+      RestApiClient.configure_with path_to_config
+    end
+
+    it 'uses the default configuration if the file contains invalid syntax' do
+      path_to_config = 'spec/support/api_config_with_error.yaml'
+      expect(RestApiClient.logger).to receive(:warn).with('YAML configuration file contains invalid syntax. Using defaults.')
+
+      RestApiClient.configure_with path_to_config
+    end
+
   end
 
-  context '.configure_authorization' do
+  describe '.configure_authorization' do
     let(:client_name) { 'foo_client' }
     let(:client_key) { 'foo_client_key' }
 
