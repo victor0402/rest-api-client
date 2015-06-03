@@ -67,6 +67,12 @@ module RestApiClient
         elsif [301, 302, 307].include? response.code
           response.follow_redirection(request, result, &block)
 
+        elsif response.code == 401
+          raise RestApiClient::UnauthorizedException.new
+
+        elsif response.code >= 400 && response.code < 500
+          return (args[:default_return] || nil)
+
         else
           response.return!(request, result, &block)
         end

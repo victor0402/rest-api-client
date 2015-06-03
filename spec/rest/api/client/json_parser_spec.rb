@@ -22,7 +22,7 @@ describe RestApiClient do
       context 'when the json contains a list of people' do
         it 'should parse the json and return the array of Person' do
           json_content = expected_response 'people.json', true
-          parsed_content = RestApiClient.parse_json json_content, {:type => Person}
+          parsed_content = RestApiClient.parse_json json_content, {:type => Person.new}
           expect(parsed_content).to all(be_a Person)
         end
       end
@@ -30,7 +30,7 @@ describe RestApiClient do
       context 'when the json contains one object' do
         it 'should parse the json and return a Person' do
           json_content = expected_response 'person.json', true
-          parsed_content = RestApiClient.parse_json json_content, {:type => Person}
+          parsed_content = RestApiClient.parse_json json_content, {:type => Person.new}
           expect(parsed_content).to be_a Person
         end
       end

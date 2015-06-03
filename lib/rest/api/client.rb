@@ -4,6 +4,7 @@ require 'rest/api/client/logger'
 require 'rest/api/client/json_parser'
 require 'rest/api/client/config'
 require 'rest/api/exceptions/service_url_exception'
+require 'rest/api/exceptions/unauthorized_exception'
 require 'rest/api/client/request_handler'
 
 module RestApiClient
@@ -19,11 +20,11 @@ module RestApiClient
     attribute :updated_at, Date
 
     def self.list
-      perform_get path, {:type => self}
+      perform_get path, {:type => self.new}
     end
 
     def self.find(id)
-      perform_get "#{path}/#{id}", {:type => self}
+      perform_get "#{path}/#{id}", {:type => self.new}
     end
 
     def self.get(id)
@@ -31,7 +32,8 @@ module RestApiClient
     end
 
     def save!
-      perform_post path, {:type => self, :params => {self.class.name.split('::').last.downcase => self.attributes}}
+      saved_user = perform_post path, {:type => self.new, :params => {self.class.name.split('::').last.downcase => self.attributes}}
+      self.attributes = saved_user ? saved_user.attributes : {}
     end
 
     def delete
@@ -39,7 +41,7 @@ module RestApiClient
     end
 
     def update!
-      perform_put "#{path}/#{id}", {:type => self, :params => self.attributes}
+      perform_put "#{path}/#{id}", {:type => self.new, :params => self.attributes}
     end
 
     def perform_get(path, args = {}, headers = {})

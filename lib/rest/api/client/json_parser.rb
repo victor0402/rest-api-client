@@ -13,9 +13,9 @@ module RestApiClient
     end
 
     if json_data.kind_of?(Array) && data_type
-      return json_data.map { |data| data_type.new data }
+      return json_data.map { |data| data_type.class.new data }
     elsif json_data.kind_of?(Hash) && data_type
-      return data_type.new json_data
+      return data_type.class.new json_data
     else
       return json_data unless json_data.empty?
     end
