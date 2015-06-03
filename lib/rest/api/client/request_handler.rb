@@ -8,32 +8,37 @@ module RestApiClient
   class RequestsHandler
 
     def self.perform_get(service_key, path, args = {:params => {}}, headers = {})
-      uri = Addressable::URI.new
-      uri.query_values = args[:params]
-      url = get_service_url(service_key) + path + '?' + (uri.query || '')
-      headers = treat_header headers, service_key
+      self.do_request_without_payload('get', service_key, path, args, headers)
+    end
 
-      RestClient.get(url, headers) { |response, request, result, &block|
+    def self.perform_delete(service_key, path, args = {:params => {}}, headers = {})
+      self.do_request_without_payload('delete', service_key, path, args, headers)
+    end
+
+    def self.perform_post(service_key, path, args = {:params => {}}, headers = {})
+      self.do_request_with_payload('post', service_key, path, args, headers)
+    end
+
+    def self.perform_put(service_key, path, args = {:params => {}}, headers = {})
+      self.do_request_with_payload('put', service_key, path, args, headers)
+    end
+
+    def self.do_request_with_payload(method, service_key, path, args = {:params => {}}, headers = {})
+      headers = treat_header headers, service_key
+      url = get_service_url(service_key) + path
+
+      res = RestClient::Resource.new(url)
+      res.method(method).call(args[:params], headers) { |response, request, result, &block|
         get_response_callback(args).call(response, request, result, &block)
       }
     end
 
-    def self.perform_post(service_key, path, args = {:params => {}}, headers = {})
-      self.do_request('post', service_key, path, args, headers)
-    end
-
-    def self.perform_put(service_key, path, args = {:params => {}}, headers = {})
-      self.do_request('put', service_key, path, args, headers)
-    end
-
-    def self.perform_delete(service_key, path, args = {:params => {}}, headers = {})
-      self.do_request('delete', service_key, path, args, headers)
-    end
-
-    def self.do_request(method, service_key, path, args = {:params => {}}, headers = {})
+    def self.do_request_without_payload(method, service_key, path, args = {:params => {}}, headers = {})
       headers = treat_header headers, service_key
-      url = get_service_url(service_key) + path
-      RestClient.method(method).call(url, args[:params], headers) { |response, request, result, &block|
+      url = get_service_url(service_key) + path + '?' + params_to_query(args[:params])
+
+      res = RestClient::Resource.new(url)
+      res.method(method).call(headers) { |response, request, result, &block|
         get_response_callback(args).call(response, request, result, &block)
       }
     end
@@ -66,6 +71,12 @@ module RestApiClient
           response.return!(request, result, &block)
         end
       end
+    end
+
+    def self.params_to_query(params)
+      uri = Addressable::URI.new
+      uri.query_values = params
+      uri.query || ''
     end
   end
 end

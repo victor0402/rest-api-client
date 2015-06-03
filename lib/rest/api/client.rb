@@ -41,24 +41,24 @@ module RestApiClient
       perform_put "#{path}/#{id}", {:type => self, :params => self.attributes}
     end
 
-    def perform_get(path, args = {})
-      RequestsHandler.perform_get(service_key, path, args)
+    def perform_get(path, args = {}, headers = {})
+      RequestsHandler.perform_get(service_key, path, args, headers)
     end
 
-    def perform_post(path, args = {})
-      RequestsHandler.perform_post(service_key, path, args)
+    def perform_post(path, args = {}, headers = {})
+      RequestsHandler.perform_post(service_key, path, args, headers)
     end
 
-    def perform_put(path, args = {})
-      RequestsHandler.perform_put(service_key, path, args)
+    def perform_put(path, args = {}, headers = {})
+      RequestsHandler.perform_put(service_key, path, args, headers)
     end
 
-    def perform_delete(path, args = {})
-      RequestsHandler.perform_delete(service_key, path, args)
+    def perform_delete(path, args = {}, headers = {})
+      RequestsHandler.perform_delete(service_key, path, args, headers)
     end
 
-    def self.perform_get(path, args = {})
-      RequestsHandler.perform_get(service_key, path, args)
+    def self.perform_get(path, args = {}, headers = {})
+      RequestsHandler.perform_get(service_key, path, args, headers)
     end
 
     # default service_key to instance methods

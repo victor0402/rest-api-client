@@ -8,10 +8,12 @@ module MockRequests
     response
   end
 
-  def mock_request(method, expected_uri, response_file = nil, expected_header = nil)
+  def mock_request(method, expected_uri, response_file = nil, expected_header = nil, expected_body = nil)
     request = stub_request(method, expected_uri)
 
     request.with(:headers => expected_header) if expected_header
+
+    request.with(:body => expected_body) if expected_body
 
     response = {:body => '{}'}
     response = expected_response(response_file) if response_file

@@ -20,6 +20,7 @@ module RestApiClient
   end
 
   def self.get_auth_key(client_name)
+    @config['authorization'] ||= {}
     @config['authorization'][client_name]
   end
 
