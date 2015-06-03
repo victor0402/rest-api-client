@@ -10,8 +10,8 @@ module RestApiClient
     def self.perform_get(service_key, path, args = {:params => {}}, headers = {})
       uri = Addressable::URI.new
       uri.query_values = args[:params]
-      url = get_service_url(service_key) + path + '?' + uri.query
-      headers = treat_header headers
+      url = get_service_url(service_key) + path + '?' + (uri.query || '')
+      headers = treat_header headers, service_key
 
       RestClient.get(url, headers) { |response, request, result, &block|
         get_response_callback(args).call(response, request, result, &block)
@@ -31,17 +31,17 @@ module RestApiClient
     end
 
     def self.do_request(method, service_key, path, args = {:params => {}}, headers = {})
-      headers = treat_header headers
+      headers = treat_header headers, service_key
       url = get_service_url(service_key) + path
       RestClient.method(method).call(url, args[:params], headers) { |response, request, result, &block|
         get_response_callback(args).call(response, request, result, &block)
       }
     end
 
-    def self.treat_header(headers)
+    def self.treat_header(headers, service_key)
       authorization_key = RestApiClient.get_auth_key service_key
       if authorization_key
-        headers.merge(:Authorization => authorization_key)
+        headers = headers.merge(:Authorization => authorization_key)
       end
       headers
     end

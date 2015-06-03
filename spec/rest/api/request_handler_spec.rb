@@ -36,11 +36,12 @@ describe RestApiClient::RequestsHandler do
     let(:service_url) { 'http://foo.bar' }
     let(:auth_key) { 'key' }
 
-    it 'uses the authorization_key if it is configured' do
+    it 'sends the authorization_key in the headers if it is configured' do
+      mock_request :post, "#{service_url}/", 'people_response.txt', {:Authorization => 'key'}
       RestApiClient.configure_authorization service_key, auth_key
       mock_redis_get service_key, service_url
 
-      RestApiClient::RequestsHandler.do_request('get', service_key, '')
+      RestApiClient::RequestsHandler.do_request('post', service_key, '')
     end
   end
 end
