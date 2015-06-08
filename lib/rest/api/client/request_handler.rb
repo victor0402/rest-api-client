@@ -68,10 +68,12 @@ module RestApiClient
           response.follow_redirection(request, result, &block)
 
         elsif response.code == 401
-          raise RestApiClient::UnauthorizedException.new
+          raise RestApiClient::UnauthorizedException.new RestApiClient.parse_json response
 
         elsif response.code >= 400 && response.code < 500
-          return (args[:default_return] || nil)
+          response = RestApiClient.parse_json response
+          message = response.has_key?('message') ? response['message'] : ''
+          raise RestApiClient::ModelErrorsException.new message
 
         else
           response.return!(request, result, &block)
