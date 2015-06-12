@@ -17,11 +17,15 @@ module RestApiClient
     SERVICE_KEY = ''
 
     attribute :id, Integer
-    attribute :created_at, Date
-    attribute :updated_at, Date
+    attribute :created_at, DateTime
+    attribute :updated_at, DateTime
 
-    def self.list
-      perform_get path, {:type => self}
+    def self.list(params = {})
+      perform_get path, {:type => self, :params => params}
+    end
+
+    def self.count(params = {})
+      perform_get "#{path}/count", {:params => params}
     end
 
     def self.find(id)
@@ -43,7 +47,9 @@ module RestApiClient
     end
 
     def update!
-      perform_put "#{path}/#{id}", {:type => self.class, :params => self.attributes}
+      klazz = self.class
+      response = perform_put "#{path}/#{id}", {:type => klazz, :params => {get_model_name => self.attributes}}
+      self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
     end
 
     def perform_get(path, args = {}, headers = {})

@@ -13,12 +13,16 @@ module RestApiClient
         json_data = json_response['data']
       end
 
-      if json_data.kind_of?(Array) && data_type
-        return json_data.map { |data| data_type.new data }
-      elsif json_data.kind_of?(Hash) && data_type
-        return data_type.new json_data
-      else
+      if json_data.kind_of?(Array)
+        return json_data.map { |data| data_type.new data } if data_type
         return json_data unless json_data.empty?
+
+      elsif json_data.kind_of?(Hash)
+        return data_type.new json_data if data_type
+        return json_data unless json_data.empty?
+
+      else
+        return json_data
       end
       return json_response
 
