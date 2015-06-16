@@ -29,12 +29,24 @@ describe RestApiClient do
         people = Person.list
         expect(people).to all(be_a Person)
       end
+
+      it 'allows custom params in the request' do
+        mock_request :get, "#{service_url}/people?name=peter", 'people_response.txt'
+        people = Person.list({:name => 'peter'})
+        expect(people).to all(be_a Person)
+      end
     end
 
     describe '.count' do
       it 'should get the count' do
         mock_request :get, "#{service_url}/people/count", 'count_response.txt'
         qtde = Person.count
+        expect(qtde).to eq(3)
+      end
+
+      it 'allows custom params in the request' do
+        mock_request :get, "#{service_url}/people/count?name=peter", 'count_response.txt'
+        qtde = Person.count({:name => 'peter'})
         expect(qtde).to eq(3)
       end
     end
