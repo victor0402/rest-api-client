@@ -1,8 +1,11 @@
+require_relative '../support/user'
+
 FactoryGirl.define do
-  # Example:
-  # factory :user do
-  #   first_name "John"
-  #   last_name "Doe"
-  #   admin false
-  # end
+
+  factory :user, class: User do |u|
+    u.first_name { 'Test' }
+    u.email { 'test@test.com' }
+    u.password { '123456789' }
+    u.password_confirmation { '123456789' }
+  end
 end
