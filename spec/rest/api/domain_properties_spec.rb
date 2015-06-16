@@ -27,6 +27,7 @@ describe 'RestApiClient' do
       subject(:class_methods) { SomeDomain.methods }
 
       it { expect(class_methods).to include(:list) }
+      it { expect(class_methods).to include(:count) }
       it { expect(class_methods).to include(:perform_get) }
       it { expect(class_methods).to include(:find) }
       it { expect(class_methods).to include(:get) }
