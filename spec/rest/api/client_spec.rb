@@ -66,7 +66,7 @@ describe RestApiClient do
     describe '#save' do
       let(:user_test) { build(:user) }
 
-      it 'save the person and return the object with his id' do
+      before do
         user_params = user_test
         user_params.updated_at = ''
         user_params.created_at = ''
@@ -74,6 +74,9 @@ describe RestApiClient do
         body = {user_params.get_model_name => user_params.attributes}
 
         mock_request :post, "#{service_url}/user", 'new_person_response.txt', nil, body
+      end
+
+      it 'save the person and return the object with his id' do
         user_test.save!
         expect(user_test).to have_attributes(:id => 56)
       end
