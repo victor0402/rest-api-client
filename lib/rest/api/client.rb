@@ -54,9 +54,14 @@ module RestApiClient
     end
 
     def update!
-      klazz = self.class
-      response = perform_put "#{path}/#{id}", {:type => klazz, :params => {get_model_name => self.attributes}}
-      self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+      begin
+        klazz = self.class
+        response = perform_put "#{path}/#{id}", {:type => klazz, :params => {get_model_name => self.attributes}}
+        self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+      rescue RestApiClient::ModelErrorsException => e
+        @errors = e.errors
+        return false
+      end
     end
 
     def perform_get(path, args = {}, headers = {})
