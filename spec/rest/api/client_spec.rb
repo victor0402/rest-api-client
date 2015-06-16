@@ -30,6 +30,14 @@ describe RestApiClient do
       end
     end
 
+    describe '.count' do
+      it 'should get the count' do
+        mock_request :get, "#{service_url}/people/count", 'count_response.txt'
+        qtde = Person.count
+        expect(qtde).to eq(3)
+      end
+    end
+
     describe '.find' do
       let(:person_id) { 3126880 }
       let(:expected_person) { Person.new(
