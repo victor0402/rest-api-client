@@ -8,4 +8,11 @@ FactoryGirl.define do
     u.password { '123456789' }
     u.password_confirmation { '123456789' }
   end
+
+  factory :user_with_invalid_password, class: User do |u|
+    u.first_name { 'Test' }
+    u.email { 'test@test.com' }
+    u.password { '123' }
+    u.password_confirmation { '123' }
+  end
 end

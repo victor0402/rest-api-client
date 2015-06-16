@@ -92,7 +92,25 @@ describe RestApiClient do
         user_test.save!
         expect(user_test).to have_attributes(:id => 56)
       end
+    end
 
+    describe '#save with invalid parameters' do
+      let(:user) { build(:user_with_invalid_password) }
+
+      before do
+        user_params = user
+        user_params.updated_at = ''
+        user_params.created_at = ''
+        user_params.id = ''
+        body = {user_params.get_model_name => user_params.attributes}
+
+        mock_request :post, "#{service_url}/user", '400_response.txt', nil, body
+      end
+
+      it 'handle with errors' do
+        user.save!
+        expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+      end
     end
   end
 end

@@ -16,6 +16,8 @@ module RestApiClient
     PATH = ''
     SERVICE_KEY = ''
 
+    attr_reader :errors
+
     attribute :id, Integer
     attribute :created_at, DateTime
     attribute :updated_at, DateTime
@@ -37,9 +39,14 @@ module RestApiClient
     end
 
     def save!
-      klazz = self.class
-      response = perform_post path, {:type => klazz, :params => {get_model_name => self.attributes}}
-      self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+      begin
+        klazz = self.class
+        response = perform_post path, {:type => klazz, :params => {get_model_name => self.attributes}}
+        self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+      rescue RestApiClient::ModelErrorsException => e
+        @errors = e.errors
+        return false
+      end
     end
 
     def delete
