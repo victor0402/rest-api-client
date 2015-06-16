@@ -3,6 +3,7 @@ require_relative '../../support/foo'
 require_relative '../../support/bar'
 require_relative '../../support/fake_client/person'
 require_relative '../../support/fake_client/address'
+require_relative '../../support/user'
 
 describe RestApiClient do
   let(:service_url) { 'http://fake-service.com' }
@@ -62,19 +63,21 @@ describe RestApiClient do
       end
     end
 
-    # TODO - esperar o service para poder testar
-    # describe '#save' do
-    #   let(:new_person) { Person.new(
-    #       :name => 'Owens Bailey',
-    #       :email => 'pacesoto@jamnation.com',
-    #       :address => Address.new(:state => 'Connecticut', :city => 'Vincent', :street => 'Prince Street')
-    #   ) }
-    #
-    #   it 'save the person and return his id' do
-    #     # new_person.save!
-    #     # expect(new_person).to have_attributes(:id => 3126880)
-    #   end
-    #
-    # end
+    describe '#save' do
+      let(:user_test) { build(:user) }
+
+      it 'save the person and return the object with his id' do
+        user_params = user_test
+        user_params.updated_at = ''
+        user_params.created_at = ''
+        user_params.id = ''
+        body = {user_params.get_model_name => user_params.attributes}
+
+        mock_request :post, "#{service_url}/user", 'new_person_response.txt', nil, body
+        user_test.save!
+        expect(user_test).to have_attributes(:id => 56)
+      end
+
+    end
   end
 end
