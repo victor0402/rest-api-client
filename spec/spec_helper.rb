@@ -28,6 +28,10 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
+
+  config.after(:all) do
+    WebMock.allow_net_connect!
+  end
 end
 
 FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
@@ -42,3 +46,4 @@ include MockRequests
 # travis https://travis-ci.org/victor0402/rest-api-client
 require 'codeclimate-test-reporter'
 CodeClimate::TestReporter.start
+
