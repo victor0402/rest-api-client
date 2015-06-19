@@ -18,7 +18,6 @@ require 'rest/api/client'
 require 'bundler/setup'
 Bundler.setup
 
-
 RSpec.configure do |config|
   config.include FactoryGirl::Syntax::Methods
 
@@ -39,3 +38,7 @@ include RedisMock
 
 require_relative 'support/mock_requests'
 include MockRequests
+
+# travis https://travis-ci.org/victor0402/rest-api-client
+require 'codeclimate-test-reporter'
+CodeClimate::TestReporter.start
