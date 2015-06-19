@@ -1,12 +1,12 @@
 require 'simplecov'
-# cobertura dos testes
+# test coverage
 SimpleCov.start do
 
-  # ignorar pastas
+  # ignore some folders
   add_filter 'spec/'
   add_filter 'bin/'
 
-  # grupo de arquivos
+  # group of files
   add_group 'lib', 'lib'
 end
 
@@ -28,10 +28,6 @@ RSpec.configure do |config|
   config.mock_with :rspec do |mocks|
     mocks.verify_partial_doubles = true
   end
-
-  config.after(:all) do
-    WebMock.allow_net_connect!
-  end
 end
 
 FactoryGirl.definition_file_paths = [File.expand_path('../factories', __FILE__)]
@@ -42,8 +38,3 @@ include RedisMock
 
 require_relative 'support/mock_requests'
 include MockRequests
-
-# travis https://travis-ci.org/victor0402/rest-api-client
-require 'codeclimate-test-reporter'
-CodeClimate::TestReporter.start
-
