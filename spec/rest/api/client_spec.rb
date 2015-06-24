@@ -94,7 +94,7 @@ describe RestApiClient do
       end
     end
 
-    describe '#save with invalid parameters' do
+    describe 'with invalid parameters' do
       let(:user) { build(:user_with_invalid_password) }
 
       before do
@@ -107,13 +107,24 @@ describe RestApiClient do
         mock_request :post, "#{service_url}/user", '400_response.txt', nil, body
       end
 
-      it 'handle with errors' do
-        user.save!
-        expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+      context '#save' do
+        it 'returns false with the specified errors' do
+          expect(user.save).to be false
+          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+        end
+      end
+
+      context '#save!' do
+        it 'throws an exception and set the errors in the object' do
+          expect {
+            user.save!
+          }.to raise_error(RestApiClient::ModelErrorsException)
+          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+        end
       end
     end
 
-    describe '#update with invalid parameters' do
+    describe 'with invalid parameters' do
       let(:user) {
         user_instance = build(:user_with_invalid_password)
         user_instance.id = 123
@@ -126,10 +137,20 @@ describe RestApiClient do
 
         mock_request :put, "#{service_url}/user/123", '400_response.txt', nil, body
       end
+      context '#update' do
+        it 'handle with errors' do
+          user.update
+          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+        end
+      end
 
-      it 'handle with errors' do
-        user.update!
-        expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+      context '#update!' do
+        it 'throws an exception and set the errors in the object' do
+          expect {
+            user.update!
+          }.to raise_error(RestApiClient::ModelErrorsException)
+          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+        end
       end
     end
   end

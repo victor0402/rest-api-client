@@ -40,9 +40,18 @@ module RestApiClient
 
     def save!
       begin
-        klazz = self.class
-        response = perform_post path, {:type => klazz, :params => {get_model_name => self.attributes}}
-        self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+        update_attributes(perform_post path, get_params)
+        self
+      rescue RestApiClient::ModelErrorsException => e
+        @errors = e.errors
+        raise e
+      end
+    end
+
+    def save
+      begin
+        update_attributes(perform_post path, get_params)
+        self
       rescue RestApiClient::ModelErrorsException => e
         @errors = e.errors
         return false
@@ -53,14 +62,23 @@ module RestApiClient
       perform_delete "#{path}/#{id}"
     end
 
-    def update!
+    def update
       begin
-        klazz = self.class
-        response = perform_put "#{path}/#{id}", {:type => klazz, :params => {get_model_name => self.attributes}}
-        self.attributes = response && response.is_a?(klazz) ? response.attributes : {}
+        update_attributes(perform_put "#{path}/#{id}", get_params)
+        self
       rescue RestApiClient::ModelErrorsException => e
         @errors = e.errors
         return false
+      end
+    end
+
+    def update!
+      begin
+        update_attributes(perform_put "#{path}/#{id}", get_params)
+        self
+      rescue RestApiClient::ModelErrorsException => e
+        @errors = e.errors
+        raise e
       end
     end
 
@@ -114,6 +132,15 @@ module RestApiClient
 
     def ==(other)
       id == other.id
+    end
+
+    private
+    def get_params
+      {:type => self.class, :params => {get_model_name => self.attributes}}
+    end
+
+    def update_attributes(response)
+      self.attributes = response && response.is_a?(self.class) ? response.attributes : {}
     end
 
   end
