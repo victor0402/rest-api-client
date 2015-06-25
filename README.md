@@ -4,6 +4,8 @@
 
 [![Build Status](https://travis-ci.org/victor0402/rest-api-client.svg?branch=master)](https://travis-ci.org/victor0402/rest-api-client)
 
+[![Code Climate](https://codeclimate.com/github/victor0402/rest-api-client/badges/gpa.svg)](https://codeclimate.com/github/victor0402/rest-api-client)
+
 Common classes and methods to handle rest communication
 
 
