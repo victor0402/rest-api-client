@@ -11,7 +11,7 @@ require 'rest/api/client/request_handler'
 module RestApiClient
 
   class RestModel
-    include Virtus.model
+    include Virtus.model(:nullify_blank => true)
 
     PATH = ''
     SERVICE_KEY = ''
