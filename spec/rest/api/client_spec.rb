@@ -83,7 +83,7 @@ describe RestApiClient do
         user_params.updated_at = ''
         user_params.created_at = ''
         user_params.id = ''
-        body = {user_params.get_model_name => user_params.attributes}
+        body = {user_params.get_model_name => {'id'=>'', 'created_at'=>'', 'updated_at'=>'', 'first_name'=>'Test', 'email'=>'test@test.com', 'password'=>'123456789', 'password_confirmation'=>'123456789'}}
 
         mock_request :post, "#{service_url}/user", 'new_person_response.txt', nil, body
       end
@@ -102,7 +102,7 @@ describe RestApiClient do
         user_params.updated_at = ''
         user_params.created_at = ''
         user_params.id = ''
-        body = {user_params.get_model_name => user_params.attributes}
+        body = {user_params.get_model_name => {'id'=>'', 'created_at'=>'', 'updated_at'=>'', 'first_name'=>'Test', 'email'=>'test@test.com', 'password'=>'123', 'password_confirmation'=>'123'}}
 
         mock_request :post, "#{service_url}/user", '400_response.txt', nil, body
       end
