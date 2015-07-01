@@ -12,8 +12,8 @@ require 'rest/api/client/request_handler'
 module RestApiClient
 
   class RestModel
-    extend  ActiveModel::Naming
-    extend  ActiveModel::Translation
+    extend ActiveModel::Naming
+    extend ActiveModel::Translation
 
     include Virtus.model(:nullify_blank => true)
     include ActiveModel::Conversion
@@ -43,6 +43,7 @@ module RestApiClient
     end
 
     def save!
+      return false unless valid?
       begin
         update_attributes(perform_post path, get_params)
         self
@@ -53,6 +54,8 @@ module RestApiClient
     end
 
     def save
+      return false unless valid?
+
       begin
         update_attributes(perform_post path, get_params)
         self
