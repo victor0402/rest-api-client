@@ -1,3 +1,4 @@
+require 'active_model'
 require 'virtus'
 require 'rest/api/client/version'
 require 'rest/api/client/logger'
@@ -11,12 +12,15 @@ require 'rest/api/client/request_handler'
 module RestApiClient
 
   class RestModel
+    extend  ActiveModel::Naming
+    extend  ActiveModel::Translation
+
     include Virtus.model(:nullify_blank => true)
+    include ActiveModel::Conversion
+    include ActiveModel::Validations
 
     PATH = ''
     SERVICE_KEY = ''
-
-    attr_reader :errors
 
     attribute :id, Integer
     attribute :created_at, DateTime

@@ -8,6 +8,8 @@ class Person < FakeClient
   attribute :email, String
   attribute :address, Address
 
+  validates :name, presence: true
+
   def path
     PATH
   end

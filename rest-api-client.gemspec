@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_runtime_dependency 'rest-client', '~> 1.8.0'
   spec.add_runtime_dependency 'redis', '~> 3.2.1'
   spec.add_runtime_dependency 'virtus'
+  spec.add_runtime_dependency 'activemodel'
   spec.add_runtime_dependency 'addressable'
 
   spec.add_development_dependency 'bundler'
