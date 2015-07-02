@@ -48,7 +48,7 @@ module RestApiClient
         update_attributes(perform_post path, get_params)
         self
       rescue RestApiClient::ModelErrorsException => e
-        @errors = e.errors
+        errors.add(:rest_api_error, e.errors)
         raise e
       end
     end
@@ -60,7 +60,7 @@ module RestApiClient
         update_attributes(perform_post path, get_params)
         self
       rescue RestApiClient::ModelErrorsException => e
-        @errors = e.errors
+        errors.add(:rest_api_error, e.errors)
         return false
       end
     end
@@ -74,7 +74,7 @@ module RestApiClient
         update_attributes(perform_put "#{path}/#{id}", get_params)
         self
       rescue RestApiClient::ModelErrorsException => e
-        @errors = e.errors
+        errors.add(:rest_api_error, e.errors)
         return false
       end
     end
@@ -84,7 +84,7 @@ module RestApiClient
         update_attributes(perform_put "#{path}/#{id}", get_params)
         self
       rescue RestApiClient::ModelErrorsException => e
-        @errors = e.errors
+        errors.add(:rest_api_error, e.errors)
         raise e
       end
     end

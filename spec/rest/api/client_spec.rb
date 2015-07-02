@@ -110,7 +110,7 @@ describe RestApiClient do
       context '#save' do
         it 'returns false with the specified errors' do
           expect(user.save).to be false
-          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+          expect(user.errors.messages).to eq(:rest_api_error => [['Password is too short (minimum is 8 characters)']])
         end
       end
 
@@ -119,7 +119,7 @@ describe RestApiClient do
           expect {
             user.save!
           }.to raise_error(RestApiClient::ModelErrorsException)
-          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+          expect(user.errors.messages).to eq(:rest_api_error => [['Password is too short (minimum is 8 characters)']])
         end
       end
     end
@@ -140,7 +140,7 @@ describe RestApiClient do
       context '#update' do
         it 'handle with errors' do
           user.update
-          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+          expect(user.errors.messages).to eq(:rest_api_error => [['Password is too short (minimum is 8 characters)']])
         end
       end
 
@@ -149,7 +149,7 @@ describe RestApiClient do
           expect {
             user.update!
           }.to raise_error(RestApiClient::ModelErrorsException)
-          expect(user).to have_attributes(:errors => ['Password is too short (minimum is 8 characters)'])
+          expect(user.errors.messages).to eq(:rest_api_error => [['Password is too short (minimum is 8 characters)']])
         end
       end
     end
