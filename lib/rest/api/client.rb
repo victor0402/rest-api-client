@@ -141,9 +141,25 @@ module RestApiClient
       id == other.id
     end
 
+    protected
+
+    def to_hash_params
+      hash = {}
+      self.attributes.each do |key, value|
+        value_to_hash = value
+        if value_to_hash && value_to_hash.is_a?(RestModel)
+          hash["#{key}_id"] = value.id
+          value_to_hash = value.to_hash_params
+        end
+        hash[key] = value_to_hash
+      end
+      hash
+    end
+
     private
+
     def get_params
-      {:type => self.class, :params => {get_model_name => self.attributes}}
+      {:type => self.class, :params => {get_model_name => self.to_hash_params}}
     end
 
     def update_attributes(response)

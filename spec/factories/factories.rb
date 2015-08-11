@@ -1,4 +1,6 @@
 require_relative '../support/user'
+require_relative '../support/fake_client/person'
+require_relative '../support/fake_client/address'
 
 FactoryGirl.define do
 
@@ -14,5 +16,14 @@ FactoryGirl.define do
     u.email { 'test@test.com' }
     u.password { '123' }
     u.password_confirmation { '123' }
+  end
+
+  factory :address, class: Address do |u|
+    u.street { 'x' }
+  end
+
+  factory :person, class: Person do |u|
+    u.name { 'Test' }
+    u.email { 'test@test.com' }
   end
 end

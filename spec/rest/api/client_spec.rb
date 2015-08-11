@@ -75,6 +75,34 @@ describe RestApiClient do
       end
     end
 
+    describe '#save person' do
+      let(:person_test) { build(:person) }
+
+      before do
+        person_test.address = Address.new({:id => 123})
+        person_params = person_test
+        person_params.updated_at = ''
+        person_params.created_at = ''
+        person_params.id = ''
+        body = {
+            'person' => {
+                'id' => '', 'created_at' => '', 'updated_at' => '',
+                'name' => 'Test', 'email' => 'test@test.com', 'address_id' => '123',
+                'address' => {
+                    'id' => '123', 'created_at' => '', 'updated_at' => '', 'street' => '', 'city' => '', 'state' => ''
+                }
+            }
+        }
+
+        mock_request :post, "#{service_url}/people", 'new_person_response.txt', nil, body
+      end
+
+      it 'save the person and return the object with his id' do
+        person_test.save!
+        expect(person_test).to have_attributes(:id => 56)
+      end
+    end
+
     describe '#save' do
       let(:user_test) { build(:user) }
 
@@ -83,7 +111,7 @@ describe RestApiClient do
         user_params.updated_at = ''
         user_params.created_at = ''
         user_params.id = ''
-        body = {user_params.get_model_name => {'id'=>'', 'created_at'=>'', 'updated_at'=>'', 'first_name'=>'Test', 'email'=>'test@test.com', 'password'=>'123456789', 'password_confirmation'=>'123456789'}}
+        body = {user_params.get_model_name => {'id' => '', 'created_at' => '', 'updated_at' => '', 'first_name' => 'Test', 'email' => 'test@test.com', 'password' => '123456789', 'password_confirmation' => '123456789'}}
 
         mock_request :post, "#{service_url}/user", 'new_person_response.txt', nil, body
       end
@@ -102,7 +130,7 @@ describe RestApiClient do
         user_params.updated_at = ''
         user_params.created_at = ''
         user_params.id = ''
-        body = {user_params.get_model_name => {'id'=>'', 'created_at'=>'', 'updated_at'=>'', 'first_name'=>'Test', 'email'=>'test@test.com', 'password'=>'123', 'password_confirmation'=>'123'}}
+        body = {user_params.get_model_name => {'id' => '', 'created_at' => '', 'updated_at' => '', 'first_name' => 'Test', 'email' => 'test@test.com', 'password' => '123', 'password_confirmation' => '123'}}
 
         mock_request :post, "#{service_url}/user", '400_response.txt', nil, body
       end
