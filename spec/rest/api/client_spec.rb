@@ -75,6 +75,26 @@ describe RestApiClient do
       end
     end
 
+    describe 'find with association' do
+      let(:person_id) { 3126880 }
+      let(:expected_person) { Person.new(
+          :id => 3126880,
+          :name => 'Owens Bailey',
+          :email => 'pacesoto@jamnation.com',
+          :address => Address.new(:id => 9963426)
+      ) }
+
+      before(:each) do
+        mock_request :get, "#{service_url}/people/#{person_id}", 'person_response_with_address_id.txt'
+      end
+
+      it 'should fetch the person with the specified id' do
+        person = Person.find person_id
+        expect(person).to be == expected_person
+      end
+    end
+
+
     describe '#save person' do
       let(:person_test) { build(:person) }
 
