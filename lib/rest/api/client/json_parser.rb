@@ -42,8 +42,11 @@ module RestApiClient
 
       begin
         if key.end_with? '_id'
-          key = key.gsub('_id', '')
-          value = Object::const_get("#{data_type.parent}::" + key.camelize).new(:id => value)
+          key_without_id = key.gsub('_id', '')
+          if instance.respond_to?(key_without_id)
+            key = key_without_id
+            value = Object::const_get("#{data_type.parent}::" + key_without_id.camelize).new(:id => value)
+          end
         end
 
         if value.is_a?(Hash)

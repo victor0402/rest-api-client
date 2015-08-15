@@ -5,6 +5,7 @@ class Person < FakeClient
   PATH = 'people'
 
   attribute :name, String
+  attribute :car_id, Integer
   attribute :email, String
   attribute :address, Address
 

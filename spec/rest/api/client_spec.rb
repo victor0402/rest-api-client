@@ -107,7 +107,7 @@ describe RestApiClient do
         body = {
             'person' => {
                 'id' => '', 'created_at' => '', 'updated_at' => '',
-                'name' => 'Test', 'email' => 'test@test.com', 'address_id' => '123',
+                'name' => 'Test', 'car_id' => '', 'email' => 'test@test.com', 'address_id' => '123',
                 'address' => {
                     'id' => '123', 'created_at' => '', 'updated_at' => '', 'street' => '', 'city' => '', 'state' => ''
                 }
