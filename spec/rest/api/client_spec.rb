@@ -51,6 +51,26 @@ describe RestApiClient do
       end
     end
 
+    describe '#refresh' do
+      let(:person_id) { 3126880 }
+      let(:expected_person) { Person.new(
+          :id => 3126880,
+          :name => 'Owens Bailey',
+          :email => 'pacesoto@jamnation.com',
+          :address => Address.new(:id => 9963426, :state => 'Connecticut', :city => 'Vincent', :street => 'Prince Street')
+      ) }
+
+      before do
+        mock_request :get, "#{service_url}/people/#{person_id}", 'person_response.txt'
+      end
+
+      it 'should fetch the person with the specified id' do
+        person = Person.new(:id => person_id)
+        person.refresh
+        expect(person).to be == expected_person
+      end
+    end
+
     describe '.find' do
       let(:person_id) { 3126880 }
       let(:expected_person) { Person.new(

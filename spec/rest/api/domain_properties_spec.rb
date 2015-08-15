@@ -11,6 +11,7 @@ describe 'RestApiClient' do
       it { expect(instance_methods).to include(:perform_post) }
       it { expect(instance_methods).to include(:perform_delete) }
       it { expect(instance_methods).to include(:perform_put) }
+      it { expect(instance_methods).to include(:refresh) }
       it { expect(instance_methods).to include(:save!) }
       it { expect(instance_methods).to include(:delete) }
       it { expect(instance_methods).to include(:update!) }

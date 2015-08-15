@@ -42,6 +42,12 @@ module RestApiClient
       self.find id
     end
 
+    def refresh
+      response = perform_get "#{path}/#{id}", {:type => self.class}
+      update_attributes(response)
+      self
+    end
+
     def save!
       return false unless valid?
       begin
